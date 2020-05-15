@@ -4,7 +4,7 @@ class Territorio{
 	
 	var property adya=[]
 	var property position
-	var property image="amarillo.png"
+	var property image="jugador.png"
 	
 	method arriba(){		
 		return adya.get(0)		
@@ -25,7 +25,7 @@ object logicaGeneral{
 	var terri1
 	var terri2
 	var terri3
-	
+	var marcador
 	method iniciar(){
 	
 	terri1=new Territorio(position=new Position(x = 5, y = 8))
@@ -33,7 +33,8 @@ object logicaGeneral{
 	terri3=new Territorio(position=new Position(x = 5, y = 4))
 	
 	territorioEnfocado=terri2
-	
+	marcador = new Marcador(territorio = territorioEnfocado)
+	game.addVisual(marcador)
 	terri1.adya([null, null, terri2, null])
 	terri2.adya([terri1, null, terri3, null])
 	terri3.adya([terri2, null, null, null])
@@ -54,13 +55,18 @@ object logicaGeneral{
 	method moverSeleccion(numero){
 		if (territorioEnfocado.adya().get(numero)!=null){
 			territorioEnfocado=territorioEnfocado.adya().get(numero)
-			game.say(territorioEnfocado, "Soy el foco")
+			marcador.territorio(territorioEnfocado)
 		}
+	}	
+}
+
+class Marcador{
+	
+	var property territorio
+	var property image = "pepita.png"
+	
+	method position(){
+		return territorio.position()
 	}
 	
-	
-	method irAbajo(){
-		
-		
-	}
 }
