@@ -9,16 +9,10 @@ program pruebaJuego {
 	game.height(15)
 	game.width(30)
 	game.ground("ground.png")
+	
+	logicaGeneral.iniciar()
 
-	//  VISUALES
- 	//game.addVisual(dios)
- 	
- 	
- 	
- 	logicaGeneral.iniciar()
- 	
  	//  COMIENZA
- 	
 	game.start()
 }
 
