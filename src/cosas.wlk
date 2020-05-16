@@ -1,12 +1,13 @@
 import wollok.game.*
+import tableros.*
 
 class Territorio{
 	
-	//
+	// Reemplazado adya por listaAdyacencia para que sea mas descriptivo
 	var property listaAdyacencia=[]
 	var property position
 	var property image = ("marcadoresJugadores/jugador0.png")
-	//Eliminados los metodos de arriba, abajo, izquierda y derecha ya que no se van a usar
+	// Eliminados los metodos de arriba, abajo, izquierda y derecha ya que no se van a usar
 	
 }
 object logicaGeneral{
@@ -14,13 +15,20 @@ object logicaGeneral{
 	var territorioEnfocado
 	var marcador
 	
-	var terri1
+	/*var terri1
 	var terri2
-	var terri3
+	var terri3*/
+	
+	// En lugar de variables, se usara un listado para los territorios
+	// de modo que a la logica principal no le importe cuantos territorios haya y los pueda manejar a todos.
+	var listaTerritorios = []
 	
 	method iniciar(){
 	
-		terri1=new Territorio(position=new Position(x = 5, y = 8))
+		listaTerritorios = instanciadorTablero.instanciar(tableroEjemplo.listaConexiones())
+		self.crearMarcadorFoco()
+	
+		/*terri1=new Territorio(position=new Position(x = 5, y = 8))
 		terri2=new Territorio(position=new Position(x = 5, y = 6))
 		terri3=new Territorio(position=new Position(x = 5, y = 4))
 		
@@ -34,7 +42,7 @@ object logicaGeneral{
 		
 		game.addVisual(terri1)
 		game.addVisual(terri2)
-		game.addVisual(terri3)
+		game.addVisual(terri3)*/
 			
 		keyboard.up().onPressDo { self.moverSeleccion(0) }
 		keyboard.down().onPressDo { self.moverSeleccion(2) }
@@ -50,6 +58,8 @@ object logicaGeneral{
 	}	
 	
 	method crearMarcadorFoco(){
+		//Al crear foco, se establece el primer territorio de la lista como enfocado.
+		territorioEnfocado = listaTerritorios.first()
 		marcador = new Marcador(territorio = territorioEnfocado)
 		game.addVisual(marcador)
 	}
