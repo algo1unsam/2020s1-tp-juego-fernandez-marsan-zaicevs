@@ -4,7 +4,7 @@ import cosas.*
 object tableroEjemplo {
 	
 	// El fondo que se va a usar para este tablero
-	const property fondo = "ground.png"
+	const property fondo = "pepita.png"
 	
 	/*
 	 Matriz de informaciond de territorio, es una lista compuesta por listas [[],[],[]], cada sublista es un terrotorio
@@ -20,10 +20,20 @@ object tableroEjemplo {
 	*/
 	
 	const property listaConexiones = 
-							[[5, 8, null, 	null, 	1, 		null],
-							 [5, 6, 0,		null, 	2, 		null],
-							 [5, 4, 1, 		null, 	null, 	null]
-							 ]
+							[[1, 13, null, 	null, 	   1,   null], //0
+							 [2, 10,    0,	null,      2,	null], //1
+							 [1, 3,     1,	null, 	null,  	null], //2
+							 [8, 12, null,     6,      4,      0], //3  
+							 [9,7,      3,     7,      5,   null], //4  
+							 [9,3,      4,     8,   null,      2], //5
+							 [16,13, null,     9,      7,      3], //6
+							 [16,8,     6,    10,      8,      4], //7 
+							 [16,3,     7,    11,   null,      5], //8 
+							 [19,12, null,  null,     10,      6], //9 
+							 [19,7,     9,  null,     11,      7], //10
+							 [19,1,    10,  null,   null,      8]  //11 
+							 
+							 ]	
 }
 
 object instanciadorTablero {
@@ -39,7 +49,7 @@ object instanciadorTablero {
 		const listaTerritorios = []
 		
 		// Primero instancio todos los territorios, no puedo crear adyacencias si no estan instanciados
-		// (porque necesito pasarle la referencia a los territorios, pero como muchos no estan creados, las referencias no existe y van a dar error)
+		// (porque necesito pasarl la referencia a los territorios, pero como muchos no estan creados, las referencias no existe y van a dar error)
 		listaConexiones.forEach({territorio =>
 			listaTerritorios.add(self.crearTerritorio(territorio.get(0), territorio.get(1)))
 		})
