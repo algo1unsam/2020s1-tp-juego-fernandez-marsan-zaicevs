@@ -20,9 +20,9 @@ object tableroEjemplo {
 	*/
 	
 	const property listaConexiones = 
-							[[1, 13, null, 	null, 	   1,   null], //0
+							[[1, 13, null,     3, 	   1,   null], //0
 							 [2, 10,    0,	null,      2,	null], //1
-							 [1, 3,     1,	null, 	null,  	null], //2
+							 [1, 3,     1,     5, 	null,  	null], //2
 							 [8, 12, null,     6,      4,      0], //3  
 							 [9,7,      3,     7,      5,   null], //4  
 							 [9,3,      4,     8,   null,      2], //5
