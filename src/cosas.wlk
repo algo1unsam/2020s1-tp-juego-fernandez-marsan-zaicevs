@@ -8,6 +8,10 @@ class Territorio{
 	var property position
 	var property cantidadInfanteria
 	var property image = ("marcadoresJugadores/jugador0.png")
+	
+	method puedeMover() = cantidadInfanteria > 1
+	method reducirInfanteria()  {cantidadInfanteria--}
+	method aumentarInfanteria() {cantidadInfanteria++}
 	// Eliminados los metodos de arriba, abajo, izquierda y derecha ya que no se van a usar
 	
 }
@@ -31,13 +35,39 @@ object logicaGeneral{
 		keyboard.down().onPressDo { self.moverSeleccion(2) }
 		keyboard.left().onPressDo {self.moverSeleccion(3) }
 		keyboard.right().onPressDo {  self.moverSeleccion(1)}
+		keyboard.space().onPressDo {self.accionEspacio() }
 		
 	}
 	method moverSeleccion(numero){
 		if (territorioEnfocado.listaAdyacencia().get(numero)!=null){
 			territorioEnfocado=territorioEnfocado.listaAdyacencia().get(numero)
 		}
+	}
+	
+	method seleccionar(){
+		if(territorioEnfocado == territorioSeleccionado){
+			territorioSeleccionado = null
+		}else{
+			territorioSeleccionado = territorioEnfocado
+		}
+	}
+	
+	method moverInfanteria(){
+		if(territorioSeleccionado.puedeMover()){
+			territorioEnfocado.aumentarInfanteria()
+			territorioSeleccionado.reducirInfanteria()
+		}else{
+			territorioSeleccionado = null
+		}
 	}	
+	
+	method accionEspacio(){
+		if(territorioSeleccionado != null and territorioSeleccionado != territorioEnfocado){
+			self.moverInfanteria()
+		}else{
+			self.seleccionar()			
+		}
+	}
 	
 	method crearVisualMarcadores(){
 		game.addVisual(marcadorFoco)

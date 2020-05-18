@@ -40,7 +40,7 @@ object instanciadorTablero {
 	
 	//Metodo que crea un territorio en base a su posicion, y  le agrego su visual
 	method crearTerritorio(x, y){
-		const territorio = new Territorio(position=new Position(x = x, y = y), cantidadInfanteria = 1)
+		const territorio = new Territorio(position=new Position(x = x, y = y), cantidadInfanteria = 2)
 		game.addVisual(territorio)
 		//Creo tambien el visual del numero del territorio
 		game.addVisual(new Numero(territorioReferencia = territorio))
