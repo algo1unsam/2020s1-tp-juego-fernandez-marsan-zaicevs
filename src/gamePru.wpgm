@@ -10,7 +10,7 @@ program pruebaJuego {
 	game.width(21)
 	//cambie el ground por boardGround para poner una imgaen de fondo completa
 	//game.ground("mapa.jpg")
-	game.boardGround("mapa.jpg")
+	game.boardGround("mapa2.png")
 	
 	logicaGeneral.iniciar()
 
