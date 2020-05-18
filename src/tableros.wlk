@@ -23,9 +23,9 @@ object tableroEjemplo {
 							[[1, 13, null,     3, 	   1,   null], //0
 							 [2, 10,    0,	null,      2,	null], //1
 							 [1, 3,     1,     5, 	null,  	null], //2
-							 [10, 12, null,     6,      4,      0], //3  
-							 [10,7,      3,     7,      5,   null], //4  
-							 [11,3,      4,     8,   null,      2], //5
+							 [10, 12, null,    6,      4,      0], //3  
+							 [10,7,      3,    7,      5,   null], //4  
+							 [11,3,      4,    8,   null,      2], //5
 							 [14,12, null,     9,      7,      3], //6
 							 [15,8,     6,    10,      8,      4], //7 
 							 [15,3,     7,    11,   null,      5], //8 
@@ -40,8 +40,10 @@ object instanciadorTablero {
 	
 	//Metodo que crea un territorio en base a su posicion, y  le agrego su visual
 	method crearTerritorio(x, y){
-		const territorio = new Territorio(position=new Position(x = x, y = y))
+		const territorio = new Territorio(position=new Position(x = x, y = y), cantidadInfanteria = 1)
 		game.addVisual(territorio)
+		//Creo tambien el visual del numero del territorio
+		game.addVisual(new Numero(territorioReferencia = territorio))
 		return territorio
 	}
 	
