@@ -22,7 +22,7 @@ object logicaGeneral{
 	
 	// En lugar de variables, se usara un listado para los territorios
 	// de modo que a la logica principal no le importe cuantos territorios haya y los pueda manejar a todos.
-	var listaTerritorios = []
+	var property listaTerritorios = []
 	
 	method iniciar(){
 	

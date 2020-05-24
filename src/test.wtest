@@ -1,0 +1,34 @@
+import cosas.*
+import tableros.*
+
+describe "tablero tests"{ 
+	
+	test "prueba mover derecha" {
+		logicaGeneral.iniciar()
+		logicaGeneral.moverSeleccion(1)
+		assert.equals(logicaGeneral.listaTerritorios().get(3),logicaGeneral.territorioEnfocado())
+	}
+	
+	test "prueba mover abajo"{
+		logicaGeneral.iniciar()
+		logicaGeneral.moverSeleccion(2)
+		assert.equals(logicaGeneral.listaTerritorios().get(1),logicaGeneral.territorioEnfocado())
+	}
+	
+	test "prueba mover arriba y null"{
+		logicaGeneral.iniciar()
+		logicaGeneral.moverSeleccion(0)
+		assert.equals(logicaGeneral.listaTerritorios().get(0),logicaGeneral.territorioEnfocado()) 			// sabiendo q el territorio adyacente arriba es un null deberia quedarse en mismo territorio
+	}
+	
+	test "prueba mover izquierda"{
+		logicaGeneral.iniciar()
+		logicaGeneral.moverSeleccion(1)												//sabiendo q funciona por "prueba mover derecha" vuelvo a la posicion inicial con mover izquierda
+		logicaGeneral.moverSeleccion(3)
+		assert.equals(logicaGeneral.listaTerritorios().get(0),logicaGeneral.territorioEnfocado()) 			
+	}
+	
+	
+	
+	
+}
