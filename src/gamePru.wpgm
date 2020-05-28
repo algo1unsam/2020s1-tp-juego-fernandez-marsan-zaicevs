@@ -1,7 +1,5 @@
-
 import wollok.game.*
-import cosas.*
-
+import logicaGeneral.*
 
 program pruebaJuego {
 	//  CONFIG	
@@ -17,4 +15,3 @@ program pruebaJuego {
  	//  COMIENZA
 	game.start()
 }
-

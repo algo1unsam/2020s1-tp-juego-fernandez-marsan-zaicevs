@@ -1,4 +1,4 @@
-import cosas.*
+import logicaGeneral.*
 import tableros.*
 
 describe "tablero tests"{ 
