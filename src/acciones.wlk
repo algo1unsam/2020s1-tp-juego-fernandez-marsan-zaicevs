@@ -11,6 +11,7 @@ import logicaGeneral.*
 //Las acciones saben cambiar el estado de la logica general, y pueden pasar ellas misma de un estado a otro
 
 class Accion{
+	
 	//Accion que ejecuta la logica general
 	method accion()
 	//Accion que ejecuta la instancia de accion cuando se cambia a ella
@@ -27,12 +28,14 @@ class Accion{
 		logicaGeneral.territorioSeleccionado(territorio)
 	}
 	method seleccionadoEsMarcado() = self.seleccionado() == self.enfocado()
+	
+	method mismoJugador()=(self.enfocado().jugador() == logicaGeneral.getJugador())
 }
 
 
 object seleccionar inherits Accion{
 	override method accion(){
-		if(self.enfocado().jugador() == logicaGeneral.getJugador()){
+		if(self.mismoJugador()){
 		//Si estoy en el territorio marcado desselecciono, si no selecciono
 			if(self.seleccionadoEsMarcado()){
 				self.seleccionado(null)
@@ -53,12 +56,19 @@ object seleccionar inherits Accion{
 object moverInfanteria inherits Accion{
 	
 	override method accion(){
+		if(self.seleccionado()==null)self.error("No hay territorio seleccionado")
 		//Si estoy en el territorio enfocado o no puedo mover desselecciono, si no muevo unidades
 		if(self.seleccionadoEsMarcado() or !self.seleccionado().puedeMover()){
 			self.cambiarAccionA(seleccionar)
 		}else{
-			self.enfocado().aumentarInfanteria()
-			self.seleccionado().reducirInfanteria()
+			if(self.mismoJugador()){
+				self.enfocado().aumentarInfanteria()
+				self.seleccionado().reducirInfanteria()
+			}else {
+				
+				
+			}
+			
 		}
 	}
 	
