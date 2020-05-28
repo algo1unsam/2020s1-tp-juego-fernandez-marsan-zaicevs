@@ -57,8 +57,13 @@ object logicaGeneral{
 		territorioEnfocado.aumentarInfanteria(2)
 	}
 	
+	method pasarTurno(){
+		self.siguienteJugador()
+		territorioSeleccionado = null
+		accion = seleccionar
+	}
+	
 	method siguienteJugador(){
-		territorioSeleccionado=null
 		indiceJugador++
 		if(indiceJugador >= listaJugadores.size() - 1){
 			indiceJugador = 0
@@ -74,7 +79,7 @@ object logicaGeneral{
 		keyboard.left().onPressDo { self.moverSeleccion(3) }
 		keyboard.right().onPressDo {  self.moverSeleccion(1)}
 		keyboard.space().onPressDo { accion.accion() }
-		keyboard.enter().onPressDo {self.siguienteJugador()}
+		keyboard.enter().onPressDo { self.pasarTurno() }
 		
 	}
 }
