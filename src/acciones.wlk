@@ -32,14 +32,17 @@ class Accion{
 
 object seleccionar inherits Accion{
 	override method accion(){
+		if(self.enfocado().jugador()==logicaGeneral.getJugador()){
 		//Si estoy en el territorio marcado desselecciono, si no selecciono
 		if(self.seleccionadoEsMarcado()){
 			self.seleccionado(null)
 		}else{
 			self.seleccionado(self.enfocado())
 			self.cambiarAccionA(moverInfanteria)
+				}
+			}
 		}
-	}
+	
 	//Cuando se establece esta accion, necesariamente no debe haber un territorio seleccionado
 	override method esCambiadoA(){
 		self.seleccionado(null)
