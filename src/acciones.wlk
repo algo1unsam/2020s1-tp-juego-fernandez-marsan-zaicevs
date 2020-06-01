@@ -58,22 +58,14 @@ object moverInfanteria inherits Accion{
 	override method accion(){
 		
 		if(self.seleccionado()==null)self.error("No hay territorio seleccionado")
-		//Si estoy en el territorio enfocado o no puedo mover desselecciono, si no muevo unidades
 		
-		if(self.seleccionadoEsMarcado() or !self.seleccionado().puedeMover()){
+		if(self.seleccionadoEsMarcado()){
 			self.cambiarAccionA(seleccionar)
-		}else{
-			if(self.mismoJugador()){
-				self.mover()
-			}else {
-				self.atacar()
-			}		
 		}
-	}
-	
-	method mover(){
-		self.enfocado().aumentarInfanteria()
-		self.seleccionado().reducirInfanteria()
+		
+		if(!self.mismoJugador() and self.seleccionado().puedeMover()){
+			self.atacar()
+		}
 	}
 	
 	method atacar(){
@@ -83,7 +75,7 @@ object moverInfanteria inherits Accion{
 		if(atacante.puntuacion() > atacado.puntuacion()){
 			atacado.asignarJugador(atacante.jugador())
 			atacado.cantidadInfanteria(1)
-			atacante.reducirInvanteira(1)
+			atacante.reducirInfanteria()
 		}else{
 			atacante.cantidadInfanteria(1)
 		}
