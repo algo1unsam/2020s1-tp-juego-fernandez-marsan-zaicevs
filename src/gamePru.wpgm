@@ -6,8 +6,6 @@ program pruebaJuego {
 	game.title("pruebaRisk")
 	game.height(15)
 	game.width(21)
-	//cambie el ground por boardGround para poner una imgaen de fondo completa
-	//game.ground("mapa.jpg")
 	game.boardGround("mapa2.png")
 	
 	logicaGeneral.iniciar()

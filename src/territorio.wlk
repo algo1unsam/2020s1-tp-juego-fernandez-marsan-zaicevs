@@ -12,6 +12,7 @@ class Territorio{
 	}
 	
 	method puedeMover() = cantidadInfanteria > 1
+	method puedoAtacar(_territorio) = self.esAdyacente(_territorio) and jugador != _territorio.jugador() and self.puedeMover()
 	method reducirInfanteria()  {cantidadInfanteria--}
 	method reducirInfanteria(num)  {cantidadInfanteria-= num}
 	method aumentarInfanteria() {cantidadInfanteria++}
@@ -19,7 +20,6 @@ class Territorio{
 	method estaAsignado() = !(jugador == null)
 	method asignarJugador(_jugador){
 		jugador = _jugador
-		_jugador.agregarTerritorio(self)
 	}
 	method puntuacion() = 0.randomUpTo(cantidadInfanteria*3).roundUp()
 	method esAdyacente(_territorio) = listaAdyacencia.contains(_territorio)
@@ -29,8 +29,8 @@ class Numero{
 	var property territorioReferencia
 	
 	method position() = territorioReferencia.position()
-	
 	method image(){
+		
 		if(territorioReferencia.cantidadInfanteria() < 10)
 			return "numeros/" + territorioReferencia.cantidadInfanteria() +".png"
 		else

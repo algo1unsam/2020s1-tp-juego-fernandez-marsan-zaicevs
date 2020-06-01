@@ -14,7 +14,6 @@ object seleccionar inherits Accion{
 			}
 		}
 	}
-	
 	//Cuando se establece esta accion, necesariamente no debe haber un territorio seleccionado
 	override method esCambiadoA(){
 		self.seleccionado(null)
@@ -28,27 +27,14 @@ object atacar inherits Accion{
 		
 		if(self.seleccionado()==null)self.error("No hay territorio seleccionado")
 		
-		if(self.seleccionadoEsMarcado()){
+		if(logicaGeneral.puedeAtacar()){
+			logicaGeneral.ataca()
 			self.cambiarAccionEspacio(seleccionar)
 		}
 		
-		if(!self.mismoJugador() and self.seleccionado().puedeMover() and self.sonAdyacentes()){
-			self.atacar()
+		if(self.seleccionadoEsMarcado()){
+			self.cambiarAccionEspacio(seleccionar)
 		}
-	}
-	
-	method atacar(){
-		const atacante = self.seleccionado()
-		const atacado = self.enfocado()
-		
-		if(atacante.puntuacion() > atacado.puntuacion()){
-			atacado.asignarJugador(atacante.jugador())
-			atacado.cantidadInfanteria(1)
-			atacante.reducirInfanteria()
-		}else{
-			atacante.cantidadInfanteria(1)
-		}
-		self.cambiarAccionEspacio(seleccionar)
 	}
 }
 
@@ -60,11 +46,40 @@ object asignarTerritorio inherits Accion{
 			logicaGeneral.siguienteJugador()
 			if(logicaGeneral.todosTerritoriosAsignados()){
 				self.cambiarAccionEspacio(seleccionar)
-				//Por alguna razon cambiarAccionEnter(accion) da error de tipo, preguntar luego
-				//Temporalmente escribo directamente lo que hace
-				//logicaGeneral.accionEnter(pasarTurnoAtaque)
 				self.cambiarAccionEnter(pasarTurnoAtaque)
 			}
+		}
+	}
+}
+
+object agregarRefuerzos inherits Accion{
+	override method accion(){
+		if(self.perteneceAJugadorActivo()){
+			logicaGeneral.agregarRefuerzo()
+			self.comprobarRefuerzos()
+		}
+	}
+	
+	//Cuando entro a este modo, debo revisar si el jugador activo tiene refuerzos para asignar
+	override method esCambiadoA(){
+		self.comprobarRefuerzos()
+	}
+	
+	//Comprueba si al jugador actual le quedan refuerzos, si no lo salteo
+	method comprobarRefuerzos(){
+		//Si el jugadorno tiene refuerzos para asignar
+		if(!logicaGeneral.jugadorTieneRefuerzos()){
+			//Paso al siguiente jugador
+			logicaGeneral.siguienteJugador()
+			//Si estoy en el primer jugador, quiere decir que ya pase por todos los jugadores
+			if(logicaGeneral.esPrimerJugador()){
+				//Entro al modo de seleccion y ataque
+				self.cambiarAccionEnter(pasarTurnoAtaque)
+			}else{
+				//Si no estoy en el primer jugador, quiere decir que estoy en un jugador que hace falta comprobar
+				//si tiene refuerzos para asignar, asi que vuelvo a hacer al comprobacion
+				self.esCambiadoA()
+			}	
 		}
 	}
 }
