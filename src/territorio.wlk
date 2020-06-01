@@ -22,6 +22,7 @@ class Territorio{
 		_jugador.agregarTerritorio(self)
 	}
 	method puntuacion() = 0.randomUpTo(cantidadInfanteria*3).roundUp()
+	method esAdyacente(_territorio) = listaAdyacencia.contains(_territorio)
 }
 
 class Numero{

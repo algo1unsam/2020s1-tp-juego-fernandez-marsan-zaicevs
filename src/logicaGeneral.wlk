@@ -2,7 +2,9 @@ import wollok.game.*
 import tableros.*
 import territorio.*
 import marcadores.*
-import acciones.*
+import acciones.accionesEnter.*
+import acciones.accionesEspacio.*
+import acciones.accionesPrototipo.*
 
 class Jugador{
 	const property id
@@ -24,7 +26,8 @@ object logicaGeneral{
 	var indiceJugador = 0
 	var property listaJugadores = []
 	//Acciones
-	var property accion
+	var property accionEspacio
+	var property accionEnter
 	
 
 	method iniciar(){
@@ -36,7 +39,8 @@ object logicaGeneral{
 		self.crearVisualMarcadores()
 		self.iniciarControles()
 		
-		accion = asignarTerritorio
+		accionEspacio = asignarTerritorio
+		accionEnter = noHacerNada
 		
 	}
 	method moverSeleccion(numero){
@@ -57,11 +61,7 @@ object logicaGeneral{
 		territorioEnfocado.aumentarInfanteria(2)
 	}
 	
-	method pasarTurno(){
-		self.siguienteJugador()
-		territorioSeleccionado = null
-		accion = seleccionar
-	}
+	method esUltimoJugador()= indiceJugador == listaJugadores.size() - 1
 	
 	method siguienteJugador(){
 		indiceJugador++
@@ -79,9 +79,7 @@ object logicaGeneral{
 		keyboard.down().onPressDo { self.moverSeleccion(2) }
 		keyboard.left().onPressDo { self.moverSeleccion(3) }
 		keyboard.right().onPressDo {  self.moverSeleccion(1)}
-		keyboard.space().onPressDo { accion.accion() }
-		keyboard.enter().onPressDo { self.pasarTurno() }
-		keyboard.c().onPressDo{ game.say(marcadorFoco, "dsadsa" + marcadorFoco.image()) }
-		
+		keyboard.space().onPressDo { accionEspacio.accion() }
+		keyboard.enter().onPressDo { accionEnter.accion() }		
 	}
 }
