@@ -15,7 +15,7 @@ class Accion{
 	//Accion que ejecuta la logica general
 	method accion()
 	//Accion que ejecuta la instancia de accion cuando se cambia a ella
-	method esCambiadoA()
+	method esCambiadoA(){}
 	//Metodo que usa una accion para cambiar a otra
 	method cambiarAccionA(accion){
 		logicaGeneral.accion(accion)
@@ -56,24 +56,36 @@ object seleccionar inherits Accion{
 object moverInfanteria inherits Accion{
 	
 	override method accion(){
+		
 		if(self.seleccionado()==null)self.error("No hay territorio seleccionado")
 		//Si estoy en el territorio enfocado o no puedo mover desselecciono, si no muevo unidades
+		
 		if(self.seleccionadoEsMarcado() or !self.seleccionado().puedeMover()){
 			self.cambiarAccionA(seleccionar)
 		}else{
 			if(self.mismoJugador()){
-				self.enfocado().aumentarInfanteria()
-				self.seleccionado().reducirInfanteria()
+				self.mover()
 			}else {
-				
-				
-			}
-			
+				self.atacar()
+			}		
 		}
 	}
 	
-	//No hace nada cuando se establece esta accion
-	override method esCambiadoA(){}
+	method mover(){
+		self.enfocado().aumentarInfanteria()
+		self.seleccionado().reducirInfanteria()
+	}
+	
+	method atacar(){
+		const atacante = self.seleccionado()
+		const atacado = self.enfocado()
+		
+		if(atacante.puntuacion() > atacado.puntuacion()){
+			atacado.asignarJugador(atacante.jugador())
+		}else{
+			atacante.cantidadInfanteria(1)
+		}
+	}
 }
 
 //Accion de asignacion de territorio, se fija si el territorio no se encuentra ya asignado, y si no lo asigna

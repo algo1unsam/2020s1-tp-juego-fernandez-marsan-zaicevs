@@ -21,6 +21,7 @@ class Territorio{
 		jugador = _jugador
 		_jugador.agregarTerritorio(self)
 	}
+	method puntuacion() = 0.randomUpTo(cantidadInfanteria*3).roundUp()
 }
 
 class Numero{
