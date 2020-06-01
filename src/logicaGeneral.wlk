@@ -71,6 +71,7 @@ object logicaGeneral{
 	}
 	
 	method getJugador() = listaJugadores.get(indiceJugador)
+	method getIndexJug() = indiceJugador
 	method getJugador(i) = listaJugadores.get(i)
 	
 	method iniciarControles(){
@@ -80,6 +81,7 @@ object logicaGeneral{
 		keyboard.right().onPressDo {  self.moverSeleccion(1)}
 		keyboard.space().onPressDo { accion.accion() }
 		keyboard.enter().onPressDo { self.pasarTurno() }
+		keyboard.c().onPressDo{ game.say(marcadorFoco, "dsadsa" + marcadorFoco.image()) }
 		
 	}
 }

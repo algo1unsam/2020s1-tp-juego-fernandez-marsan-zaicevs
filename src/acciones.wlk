@@ -82,6 +82,8 @@ object moverInfanteria inherits Accion{
 		
 		if(atacante.puntuacion() > atacado.puntuacion()){
 			atacado.asignarJugador(atacante.jugador())
+			atacado.cantidadInfanteria(1)
+			atacante.reducirInvanteira(1)
 		}else{
 			atacante.cantidadInfanteria(1)
 		}

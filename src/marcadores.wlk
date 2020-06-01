@@ -2,7 +2,7 @@ import logicaGeneral.*
 import wollok.game.*
 
 object marcadorFoco{
-	var property image = "marcadoresSeleccion/foco.png"
+	method image() = "marcadoresSeleccion/foco" + logicaGeneral.getIndexJug() + ".png"
 	
 	method position(){
 		const territorio = logicaGeneral.territorioEnfocado()
@@ -17,7 +17,7 @@ object marcadorFoco{
 
 //Idem marcadorFoco
 object marcadorSeleccion{
-	var property image = "marcadoresSeleccion/seleccion.png"
+	method image() = "marcadoresSeleccion/seleccion" + logicaGeneral.getIndexJug() + ".png"
 	
 	method position(){
 		const territorio = logicaGeneral.territorioSeleccionado()
