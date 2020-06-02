@@ -6,7 +6,7 @@ import wollok.game.*
 
 //Marcador que se encarga de mostrar que territorio esta enfocado
 object marcadorFoco{
-	method image() = "marcadoresSeleccion/foco" + logicaGeneral.indiceJugador() + ".png"
+	method image() = "marcadoresSeleccion/foco" + logicaGeneral.getJugador().id() + ".png"
 	
 	method position(){
 		const territorio = logicaGeneral.territorioEnfocado()
@@ -21,7 +21,7 @@ object marcadorFoco{
 
 //Idem marcadorFoco
 object marcadorSeleccion{
-	method image() = "marcadoresSeleccion/seleccion" + logicaGeneral.indiceJugador() + ".png"
+	method image() = "marcadoresSeleccion/seleccion" + logicaGeneral.getJugador().id() + ".png"
 	
 	method position(){
 		const territorio = logicaGeneral.territorioSeleccionado()
