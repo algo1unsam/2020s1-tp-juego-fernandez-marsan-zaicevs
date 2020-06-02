@@ -21,6 +21,7 @@ object pasarTurnoRefuerzos inherits Accion{
 object pasarTurnoAtaque inherits Accion{
 	override method accion(){
 		//No quiero poder pasar a un jugador que ya no tiene territorios
+		self.seleccionado(null)
 		logicaGeneral.removerJugadoresDerrotados()
 		logicaGeneral.siguienteJugador()
 		if(logicaGeneral.esPrimerJugador()){
