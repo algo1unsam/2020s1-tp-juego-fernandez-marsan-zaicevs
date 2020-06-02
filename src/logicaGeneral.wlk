@@ -5,25 +5,7 @@ import marcadores.*
 import acciones.accionesEnter.*
 import acciones.accionesEspacio.*
 import acciones.accionesPrototipo.*
-
-class Jugador{
-	const property id
-	var property refuerzos = 0
-	
-	method calcularRefuerzos(){
-		const misTerritorios = logicaGeneral.listaTerritorios().filter({territorio =>
-			territorio.jugador() == self
-		}).size()
-		
-		refuerzos = misTerritorios
-	}
-	
-	method reducirRefuerzos(){
-		refuerzos--
-	}
-	
-	method tengoRefuerzos() = refuerzos > 0
-}
+import jugador.*
 
 object logicaGeneral{
 	
@@ -33,12 +15,13 @@ object logicaGeneral{
 	// En lugar de variables, se usara un listado para los territorios
 	// de modo que a la logica principal no le importe cuantos territorios haya y los pueda manejar a todos.
 	var property listaTerritorios = []
+	//indiceJugador guarda el indice del jugador activo (0 = rojo, 1 = verde, 2 = azul)
 	var property indiceJugador = 0
 	var property listaJugadores = []
 	//Acciones
 	var property accionEspacio = noHacerNada
 	var property accionEnter = noHacerNada
-	
+	var property jugadorActivo = null
 
 	method iniciar(){
 	
@@ -58,6 +41,7 @@ object logicaGeneral{
 		}
 	}
 	
+	//Devuelve true cuando no queda ningun territorio sin asignar
 	method todosTerritoriosAsignados() = listaTerritorios.all({territorio => territorio.estaAsignado()})
 	
 	//Asigna el territorio al jugador activo
@@ -89,9 +73,13 @@ object logicaGeneral{
 		}
 	}
 	
+	//Devuelve true cuando esta seleccionado el ultimo jugador (en este caso el jugador 2 o azul)
+	//Ver porque listaJugadores devuelve 1 jugador mas de lo que deberia
 	method esUltimoJugador() = indiceJugador == listaJugadores.size() - 2
+	//Devieñve true cuando esta seleciconado el primer jugador (en este caso el jugador 0 o rojo)
 	method esPrimerJugador() = indiceJugador == 0
 	
+	//Avanza al siguiente jugador, si se encuentra en el ultimo vuelve al primero
 	method siguienteJugador(){
 		indiceJugador++
 		if(indiceJugador >= listaJugadores.size() - 1){
@@ -99,21 +87,29 @@ object logicaGeneral{
 		}
 	}
 	
+	//Devuelve la cantidad de jugadores que hay que no hayan perdido
+	method jugadoresRestantes() = listaJugadores.filter({jugador => !jugador.perdio()}).size()
+	
+	//Devuelve una referencia al jugador activo
 	method getJugador() = listaJugadores.get(indiceJugador)
-	method getJugador(i) = listaJugadores.get(i)
 	
-	
+	//Calcula los refuerzos que le corresponde a todos los jugadores
 	method calcularRefuerzos(){
 		listaJugadores.forEach({jugador =>
 			jugador.calcularRefuerzos()
 		})
 	}
+	
+	//Devuelve si el jugador activo tiene refuerzos por asignar
 	method jugadorTieneRefuerzos() = self.getJugador().tengoRefuerzos()
+	
+	//Asigna refuerzos al territorio enfocado del jugador activo
 	method agregarRefuerzo(){
 		territorioEnfocado.aumentarInfanteria()
 		self.getJugador().reducirRefuerzos()
 	} 
 	
+	//Inicializa los controles, cualquier control que se agregue que sea referente al juego deberia ir aqui
 	method iniciarControles(){
 		keyboard.up().onPressDo { self.moverSeleccion(0) }
 		keyboard.down().onPressDo { self.moverSeleccion(2) }
@@ -123,6 +119,7 @@ object logicaGeneral{
 		keyboard.enter().onPressDo { accionEnter.accion() }		
 	}
 	
+	//Creo los visuales de todos los marcadores que se van a usar
 	method crearVisualMarcadores(){
 		game.addVisual(marcadorFoco)
 		game.addVisual(marcadorSeleccion)

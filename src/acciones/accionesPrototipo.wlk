@@ -1,4 +1,8 @@
 import logicaGeneral.*
+//Accion padre, el metodo accion debe impementarse si o si
+//Cada accion tiene un metodo accion que se ejecuta cuando se apreta la tecla correspondiente (espacio o enter)
+//La logica general guarda la accion correspondiente para la tecla correspondiente
+//Cada accion puede tener un metodo esCambiadoA que se ejecuta cuando se asigna esa accion a una tecla
 
 class Accion{
 	
@@ -7,16 +11,19 @@ class Accion{
 	//Accion que ejecuta la instancia de accion cuando se cambia a ella
 	method esCambiadoA(){}
 	//Metodo que usa una accion para cambiar a otra
+	
+	//Metodos que deben ser usados a la hora de cambiar de accion en una tecla
 	method cambiarAccionEspacio(accion){
 		logicaGeneral.accionEspacio(accion)
 		accion.esCambiadoA()
 	}
-	
 	method cambiarAccionEnter(accion){
 		logicaGeneral.accionEnter(accion)
 		accion.esCambiadoA()
 	}
 	
+	
+	//Metodos para facilitar y acortar
 	method enfocado() = logicaGeneral.territorioEnfocado()
 	method seleccionado() = logicaGeneral.territorioSeleccionado()
 	method seleccionado(territorio){
@@ -34,6 +41,7 @@ class Accion{
 	method perteneceAJugadorActivo() = self.enfocado().jugador() == self.jugadorActivo()
 }
 
+//Metodo comun a espacio y enter cuando no se quiere que realicen ninguna accion
 object noHacerNada inherits Accion{
 	override method accion(){}
 }

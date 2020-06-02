@@ -1,6 +1,7 @@
 import wollok.game.*
 import logicaGeneral.*
 import territorio.*
+import jugador.*
 
 object tableroEjemplo {
 	
@@ -94,5 +95,20 @@ object instanciadorTablero {
 			listaJugadores.add(new Jugador(id = i))
 		})
 		return listaJugadores
+	}
+	
+	method generarJugadoresNew(num){
+		const primerJugador = new Jugador(id = 0)
+		var jugadorAnterior = primerJugador
+		var jugadorActual
+		
+		(1 .. num - 1).forEach({i =>
+			jugadorActual = new Jugador(id = i)
+			jugadorAnterior.siguienteJugador(jugadorActual)
+			jugadorAnterior = jugadorActual
+		})
+		
+		jugadorActual.siguienteJugador(primerJugador)
+		return primerJugador
 	}
 }

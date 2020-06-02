@@ -2,17 +2,20 @@ import logicaGeneral.*
 import acciones.accionesPrototipo.*
 import acciones.accionesEspacio.*
 
+//Accion de enter de refuerzos, no debe hacer nada con enter y que todos los refuerzos deben ser asignados
 object pasarTurnoRefuerzos inherits Accion{
 	override method accion(){
 		//No hay accion, todas las tropas deben ser asignadas
 	}
 	
+	//Cuando entro en esta accion, se deben calcular los refuerzos y la accion de espacio pasa a agregarRefuerzos
 	override method esCambiadoA(){
 		logicaGeneral.calcularRefuerzos()
 		self.cambiarAccionEspacio(agregarRefuerzos)
 	}
 }
 
+//Accion de enter de pasar el turno cuando esta en modo de ataque
 object pasarTurnoAtaque inherits Accion{
 	override method accion(){
 		if(logicaGeneral.esUltimoJugador()){
@@ -22,7 +25,6 @@ object pasarTurnoAtaque inherits Accion{
 	}
 	
 	override method esCambiadoA(){
-		console.println("Cambio a selecion y ataque")
 		self.cambiarAccionEspacio(seleccionar)
 	}
 }
