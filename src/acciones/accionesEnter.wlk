@@ -10,6 +10,8 @@ object pasarTurnoRefuerzos inherits Accion{
 	
 	//Cuando entro en esta accion, se deben calcular los refuerzos y la accion de espacio pasa a agregarRefuerzos
 	override method esCambiadoA(){
+		//No quiero calcular los refuerzos de jugadores que ya no juegan
+		logicaGeneral.removerJugadoresDerrotados()
 		logicaGeneral.calcularRefuerzos()
 		self.cambiarAccionEspacio(agregarRefuerzos)
 	}
@@ -18,10 +20,13 @@ object pasarTurnoRefuerzos inherits Accion{
 //Accion de enter de pasar el turno cuando esta en modo de ataque
 object pasarTurnoAtaque inherits Accion{
 	override method accion(){
-		if(logicaGeneral.esUltimoJugador()){
+		//No quiero poder pasar a un jugador que ya no tiene territorios
+		logicaGeneral.removerJugadoresDerrotados()
+		logicaGeneral.siguienteJugador()
+		if(logicaGeneral.esPrimerJugador()){
 			self.cambiarAccionEnter(pasarTurnoRefuerzos)
 		}
-		logicaGeneral.siguienteJugador()
+		
 	}
 	
 	override method esCambiadoA(){

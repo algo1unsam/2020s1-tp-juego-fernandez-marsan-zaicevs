@@ -21,7 +21,6 @@ object logicaGeneral{
 	//Acciones
 	var property accionEspacio = noHacerNada
 	var property accionEnter = noHacerNada
-	var property jugadorActivo = null
 
 	method iniciar(){
 	
@@ -35,6 +34,7 @@ object logicaGeneral{
 		accionEspacio = asignarTerritorio
 		
 	}
+	//Metodo que se encarga de mover el enfoque de un territorio a otro
 	method moverSeleccion(numero){
 		if (territorioEnfocado.listaAdyacencia().get(numero)!=null){
 			territorioEnfocado=territorioEnfocado.listaAdyacencia().get(numero)
@@ -73,16 +73,13 @@ object logicaGeneral{
 		}
 	}
 	
-	//Devuelve true cuando esta seleccionado el ultimo jugador (en este caso el jugador 2 o azul)
-	//Ver porque listaJugadores devuelve 1 jugador mas de lo que deberia
-	method esUltimoJugador() = indiceJugador == listaJugadores.size() - 2
-	//Devieñve true cuando esta seleciconado el primer jugador (en este caso el jugador 0 o rojo)
+	//Devuelve true cuando esta seleciconado el primer jugador (en este caso el jugador 0 o rojo)
 	method esPrimerJugador() = indiceJugador == 0
 	
 	//Avanza al siguiente jugador, si se encuentra en el ultimo vuelve al primero
 	method siguienteJugador(){
 		indiceJugador++
-		if(indiceJugador >= listaJugadores.size() - 1){
+		if(indiceJugador > listaJugadores.size() - 1){
 			indiceJugador = 0
 		}
 	}
@@ -98,6 +95,10 @@ object logicaGeneral{
 		listaJugadores.forEach({jugador =>
 			jugador.calcularRefuerzos()
 		})
+	}
+	
+	method removerJugadoresDerrotados(){
+		listaJugadores = listaJugadores.filter({jugador => !jugador.perdio()})
 	}
 	
 	//Devuelve si el jugador activo tiene refuerzos por asignar

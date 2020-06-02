@@ -2,7 +2,6 @@ import logicaGeneral.*
 
 class Jugador{
 	const property id
-	var property siguienteJugador = null
 	var property refuerzos = 0
 	//Refuerzos es la cantidad de unidades que se le van a dar a un jugador para asignar
 	
