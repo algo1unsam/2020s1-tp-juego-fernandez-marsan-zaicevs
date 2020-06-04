@@ -92,7 +92,7 @@ object instanciadorTablero {
 	method generarJugadores(num){
 		const listaJugadores = []
 		(0 .. num - 1).forEach({i =>
-			listaJugadores.add(new Jugador(id = i))
+			listaJugadores.add(new Jugador(id = i, cpu = if(i >= 1) true else false))
 		})
 		return listaJugadores
 	}

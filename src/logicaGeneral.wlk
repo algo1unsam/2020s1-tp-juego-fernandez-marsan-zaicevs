@@ -16,9 +16,6 @@ object logicaGeneral{
 	//indiceJugador guarda el indice del jugador activo (0 = rojo, 1 = verde, 2 = azul)
 	var property indiceJugador = 0
 	var property listaJugadores = []
-	//Acciones - quitar
-	//var property accionEspacio = noHacerNada
-	//var property accionEnter = noHacerNada
 	
 	var property modo = asignacion
 
@@ -83,13 +80,16 @@ object logicaGeneral{
 			modo.termino()
 			indiceJugador = 0
 		}
-		modo.accionNuevoJugador()
+		modo.turnoJugador()
 	}
 	
 	method cambiarModoA(_modo){
 		modo = _modo
 		modo.empezo()
 	}
+	
+	//Devuelve territorios sin asignar
+	method territoriosSinAsignar() = listaTerritorios.filter({territorio => !territorio.estaAsignado()})
 	
 	//Devuelve la cantidad de jugadores que hay que no hayan perdido
 	method jugadoresRestantes() = listaJugadores.filter({jugador => !jugador.perdio()}).size()
@@ -132,5 +132,12 @@ object logicaGeneral{
 		game.addVisual(marcadorFoco)
 		game.addVisual(marcadorSeleccion)
 		game.addVisual(marcadorRefuerzos)
+	}
+}
+
+object aleatorio{
+	method deLista(lista){
+		const tamanio = lista.size()
+		return lista.get(((0).randomUpTo(tamanio - 1)).roundUp())	
 	}
 }

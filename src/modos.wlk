@@ -13,12 +13,20 @@ class Modo{
 	method termino()
 	method empezo()
 	
+	//Metodo que se va a ejecutar cuando le toque a la computadora en este modo
+	method computadora()
+	
+	//Metodo que debe invocar la logicaGeneral cuando empieza el turno de un jugador
+	method turnoJugador(){
+		self.accionNuevoJugador()
+		self.jugadorActivo().jugar(self)
+	}
+	
 	//Metodos de ayuda
 	method enfocado() = logicaGeneral.territorioEnfocado()
+	method enfocado(territorio){ logicaGeneral.territorioEnfocado(territorio) }
 	method seleccionado() = logicaGeneral.territorioSeleccionado()
-	method seleccionado(territorio){
-		logicaGeneral.territorioSeleccionado(territorio)
-	}
+	method seleccionado(territorio){logicaGeneral.territorioSeleccionado(territorio) }
 	//Devuelve al jugador activo
 	method jugadorActivo() = logicaGeneral.getJugador()
 	//Devuelve true si el territorio seleccionado y el territorio enfocado pertenecen al mismo jugador
@@ -46,6 +54,11 @@ object asignacion inherits Modo {
 		}
 	}
 
+	override method computadora(){
+		self.enfocado(aleatorio.deLista(logicaGeneral.territoriosSinAsignar()))
+		self.accionEspacio()
+	}
+	
 }
 
 object ataque inherits Modo {
@@ -71,6 +84,8 @@ object ataque inherits Modo {
 		self.seleccionado(null)
 		accion = seleccionar
 	}
+	
+	override method computadora(){}
 }
 
 object refuerzos inherits Modo {
@@ -102,5 +117,17 @@ object refuerzos inherits Modo {
 		if(!logicaGeneral.jugadorTieneRefuerzos()){
 			logicaGeneral.siguienteJugador()
 		}
+	}
+	
+	override method computadora(){
+		const cantidadRefuerzos = logicaGeneral.getJugador().refuerzos()
+		(1 .. cantidadRefuerzos).forEach({i =>
+			self.asignarUnTerritorioComputadora()
+		})
+	}
+	
+	method asignarUnTerritorioComputadora(){
+		self.enfocado(aleatorio.deLista(logicaGeneral.getJugador().listaTerritorios()))
+		self.accionEspacio()
 	}
 }
