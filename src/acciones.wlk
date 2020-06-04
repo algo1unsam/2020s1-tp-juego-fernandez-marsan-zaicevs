@@ -32,15 +32,8 @@ class Accion{
 
 object seleccionar inherits Accion{
 	override method accion(){
-		if(self.mismoJugador()){
-		//Si estoy en el territorio marcado desselecciono, si no selecciono
-			if(self.seleccionadoEsMarcado()){
-				self.seleccionado(null)
-			}else{
-				self.seleccionado(self.enfocado())
-				ataque.accion(atacar)
-			}
-		}
+		self.seleccionado(self.enfocado())
+		ataque.accion(atacar)
 	}
 }
 
@@ -56,6 +49,7 @@ object atacar inherits Accion{
 		}
 		
 		if(self.seleccionadoEsMarcado()){
+			self.seleccionado(null)
 			ataque.accion(seleccionar)
 		}
 	}

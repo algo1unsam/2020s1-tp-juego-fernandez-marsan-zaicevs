@@ -3,7 +3,7 @@ import logicaGeneral.*
 
 program pruebaJuego {
 	//  CONFIG	
-	game.title("pruebaRisk")
+	game.title("Risk")
 	game.height(15)
 	game.width(21)
 	game.boardGround("mapa2.png")
