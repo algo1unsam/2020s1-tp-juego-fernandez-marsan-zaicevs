@@ -16,12 +16,6 @@ class Modo{
 	//Metodo que se va a ejecutar cuando le toque a la computadora en este modo
 	method computadora()
 	
-	//Metodo que debe invocar la logicaGeneral cuando empieza el turno de un jugador
-	method turnoJugador(){
-		self.accionNuevoJugador()
-		self.jugadorActivo().jugar(self)
-	}
-	
 	//Metodos de ayuda
 	method enfocado() = logicaGeneral.territorioEnfocado()
 	method enfocado(territorio){ logicaGeneral.territorioEnfocado(territorio) }
@@ -62,14 +56,14 @@ object asignacion inherits Modo {
 }
 
 object ataque inherits Modo {
-	var property accion = seleccionar
+	var property espacio
 	
 	override method accionEnter(){
 		logicaGeneral.siguienteJugador()
 	}
 	
 	override method accionEspacio(){
-		accion.accion()
+		espacio.accion()
 	}
 	
 	override method termino(){
@@ -77,12 +71,12 @@ object ataque inherits Modo {
 	}
 	
 	override method empezo(){
-		self.seleccionado(null)
+		//self.seleccionado(null)
 	}
 	
 	override method accionNuevoJugador(){
 		self.seleccionado(null)
-		accion = seleccionar
+		espacio = seleccionar
 	}
 	
 	override method computadora(){

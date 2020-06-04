@@ -32,8 +32,10 @@ class Accion{
 
 object seleccionar inherits Accion{
 	override method accion(){
-		self.seleccionado(self.enfocado())
-		ataque.accion(atacar)
+		if(self.perteneceAJugadorActivo()){
+			self.seleccionado(self.enfocado())
+			ataque.espacio(atacar)		
+		}
 	}
 }
 
@@ -45,12 +47,12 @@ object atacar inherits Accion{
 		if(logicaGeneral.puedeAtacar()){
 			logicaGeneral.ataca()
 			self.seleccionado(null)
-			ataque.accion(seleccionar)
+			ataque.espacio(seleccionar)
 		}
 		
 		if(self.seleccionadoEsMarcado()){
 			self.seleccionado(null)
-			ataque.accion(seleccionar)
+			ataque.espacio(seleccionar)
 		}
 	}
 }

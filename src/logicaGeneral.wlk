@@ -17,7 +17,7 @@ object logicaGeneral{
 	var property indiceJugador = 0
 	var property listaJugadores = []
 	
-	var property modo = asignacion
+	var property modo
 
 	method iniciar(){
 	
@@ -80,7 +80,8 @@ object logicaGeneral{
 			modo.termino()
 			indiceJugador = 0
 		}
-		modo.turnoJugador()
+		modo.accionNuevoJugador()
+		self.getJugador().jugar(modo)
 	}
 	
 	method cambiarModoA(_modo){

@@ -23,9 +23,7 @@ class Jugador{
 	
 	method perdio() = self.cantidadTerritorios() == 0
 	
-	method jugar(modo){
-		if(cpu) modo.computadora()
-	}
+	method jugar(modo){ if(cpu) modo.computadora() }
 	
 	method puedoAtacar() = self.listaTerritorios().any({territorio => territorio.tengoParaAtacar()})
 	method listaTerritoriosPuedenAtacar() = self.listaTerritorios().filter({territorio => territorio.tengoParaAtacar()})
