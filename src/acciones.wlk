@@ -1,4 +1,6 @@
 import logicaGeneral.*
+import modos.*
+
 //Accion padre, el metodo accion debe impementarse si o si
 //Cada accion tiene un metodo accion que se ejecuta cuando se apreta la tecla correspondiente (espacio o enter)
 //La logica general guarda la accion correspondiente para la tecla correspondiente
@@ -9,19 +11,6 @@ class Accion{
 	//Accion que ejecuta la logica general
 	method accion()
 	//Accion que ejecuta la instancia de accion cuando se cambia a ella
-	method esCambiadoA(){}
-	//Metodo que usa una accion para cambiar a otra
-	
-	//Metodos que deben ser usados a la hora de cambiar de accion en una tecla
-	method cambiarAccionEspacio(accion){
-		logicaGeneral.accionEspacio(accion)
-		accion.esCambiadoA()
-	}
-	method cambiarAccionEnter(accion){
-		logicaGeneral.accionEnter(accion)
-		accion.esCambiadoA()
-	}
-	
 	
 	//Metodos para facilitar y acortar
 	method enfocado() = logicaGeneral.territorioEnfocado()
@@ -41,7 +30,33 @@ class Accion{
 	method perteneceAJugadorActivo() = self.enfocado().jugador() == self.jugadorActivo()
 }
 
-//Metodo comun a espacio y enter cuando no se quiere que realicen ninguna accion
-object noHacerNada inherits Accion{
-	override method accion(){}
+object seleccionar inherits Accion{
+	override method accion(){
+		if(self.mismoJugador()){
+		//Si estoy en el territorio marcado desselecciono, si no selecciono
+			if(self.seleccionadoEsMarcado()){
+				self.seleccionado(null)
+			}else{
+				self.seleccionado(self.enfocado())
+				ataque.accion(atacar)
+			}
+		}
+	}
+}
+
+object atacar inherits Accion{
+	
+	override method accion(){	
+		if(self.seleccionado()==null)self.error("No hay territorio seleccionado")
+		
+		if(logicaGeneral.puedeAtacar()){
+			logicaGeneral.ataca()
+			self.seleccionado(null)
+			ataque.accion(seleccionar)
+		}
+		
+		if(self.seleccionadoEsMarcado()){
+			ataque.accion(seleccionar)
+		}
+	}
 }

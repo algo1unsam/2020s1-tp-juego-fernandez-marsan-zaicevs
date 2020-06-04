@@ -2,10 +2,8 @@ import wollok.game.*
 import tableros.*
 import territorio.*
 import marcadores.*
-import acciones.accionesEnter.*
-import acciones.accionesEspacio.*
-import acciones.accionesPrototipo.*
 import jugador.*
+import modos.*
 
 object logicaGeneral{
 	
@@ -18,9 +16,11 @@ object logicaGeneral{
 	//indiceJugador guarda el indice del jugador activo (0 = rojo, 1 = verde, 2 = azul)
 	var property indiceJugador = 0
 	var property listaJugadores = []
-	//Acciones
-	var property accionEspacio = noHacerNada
-	var property accionEnter = noHacerNada
+	//Acciones - quitar
+	//var property accionEspacio = noHacerNada
+	//var property accionEnter = noHacerNada
+	
+	var property modo = asignacion
 
 	method iniciar(){
 	
@@ -31,7 +31,7 @@ object logicaGeneral{
 		self.crearVisualMarcadores()
 		self.iniciarControles()
 		
-		accionEspacio = asignarTerritorio
+		self.cambiarModoA(asignacion)
 		
 	}
 	//Metodo que se encarga de mover el enfoque de un territorio a otro
@@ -80,8 +80,15 @@ object logicaGeneral{
 	method siguienteJugador(){
 		indiceJugador++
 		if(indiceJugador > listaJugadores.size() - 1){
+			modo.termino()
 			indiceJugador = 0
 		}
+		modo.accionNuevoJugador()
+	}
+	
+	method cambiarModoA(_modo){
+		modo = _modo
+		modo.empezo()
 	}
 	
 	//Devuelve la cantidad de jugadores que hay que no hayan perdido
@@ -116,8 +123,8 @@ object logicaGeneral{
 		keyboard.down().onPressDo { self.moverSeleccion(2) }
 		keyboard.left().onPressDo { self.moverSeleccion(3) }
 		keyboard.right().onPressDo {  self.moverSeleccion(1)}
-		keyboard.space().onPressDo { accionEspacio.accion() }
-		keyboard.enter().onPressDo { accionEnter.accion() }		
+		keyboard.space().onPressDo { modo.accionEspacio() }
+		keyboard.enter().onPressDo { modo.accionEnter() }		
 	}
 	
 	//Creo los visuales de todos los marcadores que se van a usar
