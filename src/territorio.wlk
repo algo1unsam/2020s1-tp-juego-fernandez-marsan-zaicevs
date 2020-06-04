@@ -34,6 +34,12 @@ class Territorio{
 	method puntuacion() = 0.randomUpTo(cantidadInfanteria*3).roundUp()
 	//Devuelve true si el territorio recibido por parametro es adyacente
 	method esAdyacente(_territorio) = listaAdyacencia.contains(_territorio)
+	//Filtro los null de adyacentes
+	method filtrarNull() = listaAdyacencia.filter({territorio => territorio != null})
+	//Devuelve true si puede atacar a algun territorio adyacente
+	method tengoParaAtacar() = self.filtrarNull().any({territorio => self.puedoAtacar(territorio)})
+	//Devuelve la lista de territorios que puedo atacar
+	method listaPuedoAtacar() = self.filtrarNull().filter({territorio => self.puedoAtacar(territorio)})
 }
 
 class Numero{

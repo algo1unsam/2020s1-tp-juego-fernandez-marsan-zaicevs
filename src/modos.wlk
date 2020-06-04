@@ -85,7 +85,22 @@ object ataque inherits Modo {
 		accion = seleccionar
 	}
 	
-	override method computadora(){}
+	override method computadora(){
+		if(self.puedoAtacar()){
+			const territoriosPuedenAtacar = logicaGeneral.getJugador().listaTerritoriosPuedenAtacar()
+			const territorioAtacante = aleatorio.deLista(territoriosPuedenAtacar)
+			self.enfocado(territorioAtacante)
+			self.accionEspacio()
+			const territorioAtacado = aleatorio.deLista(territorioAtacante.listaPuedoAtacar())
+			self.enfocado(territorioAtacado)
+			self.accionEspacio()
+			self.computadora()
+		}else{
+			self.accionEnter()
+		}
+	}
+	
+	method puedoAtacar() = logicaGeneral.getJugador().puedoAtacar()
 }
 
 object refuerzos inherits Modo {
