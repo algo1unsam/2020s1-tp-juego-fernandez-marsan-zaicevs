@@ -73,9 +73,8 @@ object logicaGeneral{
 	}
 	
 	method chequeoPartida(){
-		if(self.jugadoresHumanosRestantes()==0){
-		self.cambiarModoA(termino)
-		
+		if(self.jugadoresHumanosRestantes()==0 or self.jugadoresRestantes() == 1){
+			self.cambiarModoA(termino)
 		}
 	}
 	
