@@ -2,7 +2,10 @@ import logicaGeneral.*
 import acciones.*
 
 class Modo{
+	
+	const property mostrarCartel=false
 	//Acciones de teclado
+	
 	method accionEnter()
 	method accionEspacio()
 	
@@ -28,6 +31,7 @@ class Modo{
 }
 
 object asignacion inherits Modo {
+	
 	override method accionEnter(){}
 	
 	override method accionEspacio(){
@@ -141,3 +145,38 @@ object refuerzos inherits Modo {
 		self.accionEspacio()
 	}
 }
+
+object termino inherits Modo {
+
+
+	
+	override method accionEnter(){
+		
+	}
+	
+	override method accionEspacio(){
+		
+	}
+	
+	override method termino(){
+		
+	}
+	
+	override method empezo(){
+	
+	 
+	
+	}
+	
+	override method accionNuevoJugador(){
+		
+	}
+	
+	override method computadora(){
+		
+	}
+	
+	override method mostrarCartel()=true
+	
+}
+

@@ -24,11 +24,11 @@ object logicaGeneral{
 		listaJugadores = instanciadorTablero.generarJugadores(3)
 		listaTerritorios = instanciadorTablero.instanciar(tableroEjemplo.listaConexiones())
 		territorioEnfocado = listaTerritorios.first()
-		
+		self.cambiarModoA(asignacion)
 		self.crearVisualMarcadores()
 		self.iniciarControles()
 		
-		self.cambiarModoA(asignacion)
+		
 		
 	}
 	//Metodo que se encarga de mover el enfoque de un territorio a otro
@@ -64,12 +64,22 @@ object logicaGeneral{
 			atacado.asignarJugador(atacante.jugador())
 			atacado.cantidadInfanteria(1)
 			atacante.reducirInfanteria()
+			self.chequeoPartida()
+			
 		}else{
 			//Gano el defensor
 			atacante.cantidadInfanteria(1)
 		}
 	}
 	
+	method chequeoPartida(){
+		if(self.jugadoresHumanosRestantes()==0){
+		self.cambiarModoA(termino)
+		
+		}
+	}
+	
+		
 	//Devuelve true cuando esta seleciconado el primer jugador (en este caso el jugador 0 o rojo)
 	method esPrimerJugador() = indiceJugador == 0
 	
@@ -95,6 +105,10 @@ object logicaGeneral{
 	//Devuelve la cantidad de jugadores que hay que no hayan perdido
 	method jugadoresRestantes() = listaJugadores.filter({jugador => !jugador.perdio()}).size()
 	
+	//Devuelve la cantidad de jugadores humanos restantes
+	
+	method jugadoresHumanosRestantes() = listaJugadores.filter({jugador => !jugador.perdio() and !jugador.cpu()}).size() 
+	
 	//Devuelve una referencia al jugador activo
 	method getJugador() = listaJugadores.get(indiceJugador)
 	
@@ -107,6 +121,8 @@ object logicaGeneral{
 	
 	method removerJugadoresDerrotados(){
 		listaJugadores = listaJugadores.filter({jugador => !jugador.perdio()})
+		
+		
 	}
 	
 	//Devuelve si el jugador activo tiene refuerzos por asignar
@@ -133,6 +149,8 @@ object logicaGeneral{
 		game.addVisual(marcadorFoco)
 		game.addVisual(marcadorSeleccion)
 		game.addVisual(marcadorRefuerzos)
+		game.addVisual(cartel)
+		
 	}
 }
 

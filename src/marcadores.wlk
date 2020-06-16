@@ -52,3 +52,27 @@ object marcadorRefuerzos{
 		}	
 	}
 }
+
+object cartel{
+	
+	method image(){
+		
+		if(logicaGeneral.jugadoresHumanosRestantes()>0){
+		return "carteles/ganaste.png"
+		
+		}else{
+		return "carteles/perdiste.png"
+			
+		}
+	}
+	
+	method position(){
+		
+		if(logicaGeneral.modo().mostrarCartel()){
+			return game.at(6,6)
+		}else{
+			return game.at(-3,-3)
+	}
+  }
+
+}
