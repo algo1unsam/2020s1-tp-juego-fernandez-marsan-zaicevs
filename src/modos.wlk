@@ -114,6 +114,7 @@ object refuerzos inherits Modo {
 	}
 	
 	override method empezo(){
+		self.seleccionado(null)
 		logicaGeneral.removerJugadoresDerrotados()
 		logicaGeneral.calcularRefuerzos()
 	}
