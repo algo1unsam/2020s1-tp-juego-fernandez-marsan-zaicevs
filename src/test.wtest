@@ -72,8 +72,8 @@ describe "tablero tests"{
 	
 	test "asignar 1 territorio humano 2"{
 		logicaGeneral.iniciar()
-		asignacion.accionEspacio()
-		assert.equals(1,logicaGeneral.listaTerritorios().filter({territorio =>territorio.jugador()==1}))
+		logicaGeneral.modo().accionEspacio()
+		assert.equals(1, logicaGeneral.getJugador().cantidadTerritorios())
 	}
 	
 	
