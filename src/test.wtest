@@ -1,7 +1,30 @@
 import logicaGeneral.*
 import tableros.*
+import modos.*
+import jugador.*
+import territorio.*
+import tableros.*
+import marcadores.*
+import acciones.*
+
+	
 
 describe "tablero tests"{ 
+	var listaTerritorios = []
+	var indiceJugador = 0
+	var listaJugadores = []
+	var territorioEnfocado = null
+	var territorioSeleccionado = null
+	fixture {
+		
+		listaJugadores = instanciadorTablero.generarJugadores(3)
+	    listaTerritorios = instanciadorTablero.instanciar(tableroEjemplo.listaConexiones())
+	    territorioEnfocado = listaTerritorios.first()
+		
+		
+		}
+	
+	
 	
 	test "prueba mover derecha" {
 		logicaGeneral.iniciar()
@@ -26,6 +49,31 @@ describe "tablero tests"{
 		logicaGeneral.moverSeleccion(1)												//sabiendo q funciona por "prueba mover derecha" vuelvo a la posicion inicial con mover izquierda
 		logicaGeneral.moverSeleccion(3)
 		assert.equals(logicaGeneral.listaTerritorios().get(0),logicaGeneral.territorioEnfocado()) 			
+	}
+			
+		// los territorios se instanciaron correctamente 
+	test "instanciador de tableros"{
+		logicaGeneral.iniciar()
+		asignacion.accionEspacio()
+		assert.equals(12,listaTerritorios.size())
+	}
+	
+	test "creacion de jugadores"{
+		
+		assert.equals(3,listaJugadores.size())
+		
+	}
+	      //al presionar una sola vez la barra se le asigna 1 territorio humano y 2 pc por eso todos los territorios aun no estan asignados
+	test "asignar 1 territorio humano"{
+		logicaGeneral.iniciar()
+		asignacion.accionEspacio()
+		assert.notThat(logicaGeneral.todosTerritoriosAsignados())
+	}
+	
+	test "asignar 1 territorio humano 2"{
+		logicaGeneral.iniciar()
+		asignacion.accionEspacio()
+		assert.equals(1,logicaGeneral.listaTerritorios().filter({territorio =>territorio.jugador()==1}))
 	}
 	
 	
